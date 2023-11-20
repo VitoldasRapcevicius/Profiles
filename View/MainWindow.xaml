@@ -1,0 +1,531 @@
+﻿<Window
+    x:Class="Profiles.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Profiles"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Profiles Management"
+    Width="1000"
+    Height="550"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#FF4C5E71" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="VerticalGridLinesBrush" Value="#FF25364A" />
+            <Setter Property="HorizontalGridLinesBrush" Value="#FF25364A" />
+            <Setter Property="AlternatingRowBackground" Value="#FF405D7B" />
+            <Setter Property="RowBackground" Value="#FF5F7A94" />
+            <Setter Property="RowHeight" Value="25" />
+            <Setter Property="RowHeaderWidth" Value="0" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
+        </Style>
+    </Window.Resources>
+    <Grid Background="#FFDADADA">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1" Grid.Column="0">
+            <StackPanel>
+                <Label
+                    Width="100"
+                    Height="26"
+                    Margin="20,10,0,0"
+                    HorizontalAlignment="Left"
+                    Content="Project" />
+                <ComboBox
+                    Name="Project_ComboBox"
+                    Width="180"
+                    DisplayMemberPath="Name"
+                    ItemsSource="{Binding Projects}"
+                    SelectedItem="{Binding SelectedProject}" />
+                <Label
+                    Width="120"
+                    Height="26"
+                    Margin="20,10,0,0"
+                    HorizontalAlignment="Left"
+                    Content="Profile material" />
+                <ComboBox
+                    Name="PropertyType_ComboBox"
+                    Width="180"
+                    DisplayMemberPath="Name"
+                    ItemsSource="{Binding PropertyTypes}"
+                    SelectedItem="{Binding SelectedPropertyType}" />
+                <Label
+                    Width="120"
+                    Height="26"
+                    Margin="20,10,0,0"
+                    HorizontalAlignment="Left"
+                    Content="Profile cross section" />
+                <ComboBox
+                    Name="Property_ComboBox"
+                    Width="180"
+                    DisplayMemberPath="Name"
+                    ItemsSource="{Binding Properties}"
+                    SelectedItem="{Binding SelectedProperty}" />
+            </StackPanel>
+        </Grid>
+
+        <TabControl
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="0,10,20,10"
+            TabStripPlacement="Top">
+            <TabItem Header="Project">
+                <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    <Grid Background="#FFDADADA">
+                        <Label
+                            Grid.ColumnSpan="2"
+                            Width="100"
+                            Height="26"
+                            Margin="20,20,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Content="InternalID"
+                            FontSize="12"
+                            FontWeight="Normal" />
+                        <Label
+                            Grid.ColumnSpan="2"
+                            Width="100"
+                            Height="26"
+                            Margin="20,60,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Content="Name"
+                            FontSize="12"
+                            FontWeight="Normal" />
+                        <TextBox
+                            Name="InternalID_Project_TextBox"
+                            Grid.Column="1"
+                            Width="180"
+                            Height="26"
+                            Margin="140,20,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Text="{Binding Project.InternalId}" Background="#FFDADADA">
+                            <TextBox.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="3" />
+                                </Style>
+                            </TextBox.Resources>
+                        </TextBox>
+                        <TextBox
+                            Name="Name_Project_TextBox"
+                            Grid.Column="1"
+                            Width="180"
+                            Height="26"
+                            Margin="140,60,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Text="{Binding Project.Name}" Background="#FFDADADA" >
+                            <TextBox.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="3" />
+                                </Style>
+                            </TextBox.Resources>
+                        </TextBox>
+                        <DataGrid
+                            Name="ProjectsList"
+                            Grid.ColumnSpan="2"
+                            Margin="20,100,20,20"
+                            FontSize="12"
+                            ItemsSource="{Binding Projects}"
+                            SelectedItem="{Binding SelectedProject}" />
+                        <Button
+                            Name="Create_Project"
+                            Grid.Column="1"
+                            Width="100"
+                            Height="30"
+                            Margin="340,20,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Command="{Binding CreateProjectCommand}"
+                            Content="Create"
+                            FontSize="15">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="3" />
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <Button
+                            Name="Delete_Project"
+                            Grid.Column="1"
+                            Width="100"
+                            Height="30"
+                            Margin="472,20,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Command="{Binding DeleteProjectCommand}"
+                            Content="Delete"
+                            FontSize="15">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="3" />
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <Button
+                            Name="Update_Project"
+                            Grid.Column="1"
+                            Width="100"
+                            Height="30"
+                            Margin="605,20,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Command="{Binding UpdateProjectCommand}"
+                            Content="Update"
+                            FontSize="15">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="3" />
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </Grid>
+                </ScrollViewer>
+                <TabItem.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="3,3,0,0" />
+                    </Style>
+                </TabItem.Resources>
+            </TabItem>
+            <TabItem Header="Profile material">
+                <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    <Grid Background="#FFDADADA">
+                        <Label
+                            Width="110"
+                            Height="26"
+                            Margin="20,20,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Content="Name" />
+                        <Label
+                            Width="110"
+                            Height="26"
+                            Margin="20,60,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Content="Coating" />
+                        <TextBox
+                            Name="Name_PropertyType_TextBox"
+                            Width="180"
+                            Height="26"
+                            Margin="140,20,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Text="{Binding PropertyType.Name}" Background="#FFDADADA" >
+                            <TextBox.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="3" />
+                                </Style>
+                            </TextBox.Resources>
+                        </TextBox>
+                        <DataGrid
+                            Name="PropertyTypesList"
+                            Grid.ColumnSpan="4"
+                            Margin="20,100,20,20"
+                            ItemsSource="{Binding PropertyTypes}"
+                            SelectedItem="{Binding SelectedPropertyType}" />
+                        <Button
+                            Name="Create_PropertyType"
+                            Grid.Column="3"
+                            Width="100"
+                            Height="30"
+                            Margin="340,20,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Command="{Binding CreatePropertyTypeCommand}"
+                            Content="Create"
+                            FontSize="15">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="3" />
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <Button
+                            Name="Delete_PropertyType"
+                            Grid.Column="3"
+                            Width="100"
+                            Height="30"
+                            Margin="472,20,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Command="{Binding DeletePropertyTypeCommand}"
+                            Content="Delete"
+                            FontSize="15">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="3" />
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <Button
+                            Name="Update_PropertyType"
+                            Width="100"
+                            Height="30"
+                            Margin="605,20,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Command="{Binding UpdatePropertyTypeCommand}"
+                            Content="Update"
+                            FontSize="15">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="3" />
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <CheckBox
+                            Name="Coating_PropertyType"
+                            Margin="140,66,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            IsChecked="{Binding PropertyType.Coating}" Background="#FFDADADA" >
+                            <CheckBox.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="3" />
+                                </Style>
+                            </CheckBox.Resources>
+                        </CheckBox>
+                    </Grid>
+                </ScrollViewer>
+                <TabItem.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="3,3,0,0" />
+                    </Style>
+                </TabItem.Resources>
+            </TabItem>
+            <TabItem Header="Profile cross section">
+                <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    <Grid Background="#FFDADADA">
+                        <Label
+                            Width="100"
+                            Height="26"
+                            Margin="20,20,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Content="Name" />
+                        <Label
+                            Width="100"
+                            Height="26"
+                            Margin="20,60,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Content="Prefix" />
+                        <TextBox
+                            Name="Name_Property_TextBox"
+                            Width="180"
+                            Height="26"
+                            Margin="140,20,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Text="{Binding Property.Name}" Background="#FFDADADA" >
+                            <TextBox.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="3" />
+                                </Style>
+                            </TextBox.Resources>
+                        </TextBox>
+                        <TextBox
+                            Name="Prefix_Property_TextBox"
+                            Width="180"
+                            Height="26"
+                            Margin="140,60,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Text="{Binding Property.Prefix}" Background="#FFDADADA" >
+                            <TextBox.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="3" />
+                                </Style>
+                            </TextBox.Resources>
+                        </TextBox>
+                        <DataGrid
+                            Name="PropertiesList"
+                            Margin="20,100,20,20"
+                            ItemsSource="{Binding Properties}"
+                            SelectedItem="{Binding SelectedProperty}" />
+                        <Button
+                            Name="Create_Property"
+                            Width="100"
+                            Height="30"
+                            Margin="340,20,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Command="{Binding CreatePropertyCommand}"
+                            Content="Create"
+                            FontSize="15">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="3" />
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <Button
+                            Name="Delete_Property"
+                            Width="100"
+                            Height="30"
+                            Margin="472,20,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Command="{Binding DeletePropertyCommand}"
+                            Content="Delete"
+                            FontSize="15">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="3" />
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <Button
+                            Name="Update_Property"
+                            Width="100"
+                            Height="30"
+                            Margin="605,20,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Command="{Binding UpdatePropertyCommand}"
+                            Content="Update"
+                            FontSize="15">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="3" />
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </Grid>
+                </ScrollViewer>
+                <TabItem.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="3,3,0,0" />
+                    </Style>
+                </TabItem.Resources>
+            </TabItem>
+            <TabItem Header="Profile sub cross section">
+                <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    <Grid Background="#FFDADADA">
+                        <Label
+                            Width="100"
+                            Height="26"
+                            Margin="20,20,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Content="Name" />
+                        <Label
+                            Width="100"
+                            Height="26"
+                            Margin="20,60,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Content="Prefix" />
+                        <TextBox
+                            x:Name="Name_SubProperty_TextBox"
+                            Width="180"
+                            Height="26"
+                            Margin="140,20,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Text="{Binding SubProperty.Name}" Background="#FFDADADA" >
+                            <TextBox.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="3" />
+                                </Style>
+                            </TextBox.Resources>
+                        </TextBox>
+                        <TextBox
+                            Name="Prefix_SubProperty_TextBox"
+                            Width="180"
+                            Height="26"
+                            Margin="140,60,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Text="{Binding SubProperty.Prefix}" Background="#FFDADADA" >
+                            <TextBox.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="3" />
+                                </Style>
+                            </TextBox.Resources>
+                        </TextBox>
+                        <DataGrid
+                            Name="SubPropertiesList"
+                            Margin="20,100,20,20"
+                            ItemsSource="{Binding SubProperties}"
+                            SelectedItem="{Binding SelectedSubProperty}" />
+                        <Button
+                            Name="Create_SubProperty"
+                            Width="100"
+                            Height="30"
+                            Margin="340,20,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Command="{Binding CreateSubPropertyCommand}"
+                            Content="Create"
+                            FontSize="15">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="3" />
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <Button
+                            Name="Delete_SubProperty"
+                            Width="100"
+                            Height="30"
+                            Margin="472,20,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Command="{Binding DeleteSubPropertyCommand}"
+                            Content="Delete"
+                            FontSize="15">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="3" />
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <Button
+                            Name="Update_SubProperty"
+                            Width="100"
+                            Height="30"
+                            Margin="605,20,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Command="{Binding UpdateSubPropertyCommand}"
+                            Content="Update"
+                            FontSize="15">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="3" />
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </Grid>
+                </ScrollViewer>
+                <TabItem.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="3,3,0,0" />
+                    </Style>
+                </TabItem.Resources>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
